@@ -11,4 +11,9 @@
       with_items:
         - "{{packs}}"
 
-    - git: repo=https://github.com/aki01/bashrc.git dest={{ repos_dir }} version={{ branch }}
+    - name: git clone
+      git: repo=https://github.com/aki01/bashrc.git dest={{ repos_dir }} version={{ branch }}
+
+    - name: copy .bashrc
+      shell: mv {{ work_dir }}/.bashrc {{ work_dir }}/.bashrc.back
+      shell: ln -s ~/.bash/bashrc ~/.bashrc
