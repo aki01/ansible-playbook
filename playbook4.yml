@@ -1,8 +1,14 @@
 ---
 - hosts: group1 
   user: root
+  vars:
+    work_dir: /root
+    repos_dir: "{{ work_dir }}/.bashrc_git"
+    branch: master
   tasks:
     - name: install packages. 
       yum: name={{item}} state=installed
       with_items:
         - "{{packs}}"
+
+    - git: repo=https://github.com/aki01/bashrc.git dest={{ repos_dir }} version={{ branch }}
