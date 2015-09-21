@@ -1,0 +1,8 @@
+---
+- hosts: group1 
+  user: root
+  tasks:
+    - name: install packages
+      yum: name={{item}} state=installed
+      with_items:
+        - "{{packs}}"

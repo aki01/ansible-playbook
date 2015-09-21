@@ -1,0 +1,7 @@
+---
+- hosts: test
+  become: yes
+  tasks:
+    - name: yum install
+      yum: name=git state=installed
+
