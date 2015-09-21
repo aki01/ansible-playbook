@@ -1,0 +1,16 @@
+---
+- hosts: all 
+  user: root
+  vars_files:
+    - /root/ansible/vars/vars.yml
+  tasks:
+    - name: install packages
+      yum: name={{item}} state=installed
+      with_items:
+        - "{{test}}" 
+        - tree
+        - net-tools
+      when: ansible_os_family == 'RedHat'
+    - name: install packages
+      apt : update_cache="yes"
+      when: ansible_os_family == 'Debian'
