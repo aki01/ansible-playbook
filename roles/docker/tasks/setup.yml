@@ -1,10 +1,17 @@
 - name: yum update
   yum: name=* state=latest
+  when: ansible_os_family == 'RedHat'
 - name: install docker package(rhep)
   yum: name={{item}} state=installed
   with_items:
     - docker
   when: ansible_os_family == 'RedHat'
+  
+- name: apt-get update
+  apt: name=* state=latest
+  when: ansible_os_family == 'Debian'  
 - name: install packages
-  apt : name=* state=latest 
+  apt : name={{item}} state=installed
+  with_items:
+    - docker-io 
   when: ansible_os_family == 'Debian'
