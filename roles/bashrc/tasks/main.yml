@@ -1,9 +1,13 @@
 - name: git clone
   git: repo=https://github.com/aki01/bashrc.git dest={{ repos_dir }} version={{ branch }}
 
+- stat: path={{ work_dir }}/.bashrc
+  register: file
+
 - name: mv .bashrc .bashrc.back
   shell: mv {{ work_dir }}/.bashrc {{ work_dir }}/.bashrc.back
-
+  when: file.stat.exists
+  
 - name: copy .bashrc
 #  shell: mv {{ work_dir }}/.bashrc {{ work_dir }}/.bashrc.back
   shell: ln -s {{ repos_dir }}/bashrc {{ work_dir }}/.bashrc
