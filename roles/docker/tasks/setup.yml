@@ -4,14 +4,25 @@
 - name: install docker package(rhep)
   yum: name={{item}} state=installed
   with_items:
+    - python
+    - python-devel
     - docker
   when: ansible_os_family == 'RedHat'
-  
+- name: install pip(rhep)
+  command: easy_install pip
+  when: ansible_os_family == 'RedHat'
+
 - name: apt-get update
   apt: name=* state=latest
   when: ansible_os_family == 'Debian'  
 - name: install packages
   apt : name={{item}} state=installed
   with_items:
+    - python
+    - python-devel
     - docker-io 
   when: ansible_os_family == 'Debian'
+
+- name: Install Docker Python library
+  pip: name=docker-py state=present
+  sudo: yes
