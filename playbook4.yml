@@ -1,5 +1,5 @@
 ---
-- hosts: group1 
+- hosts: docker 
   user: root
   vars:
     work_dir: /root

@@ -1,0 +1,5 @@
+test: git
+packs:
+  - git
+  - tree
+  - net-tools
