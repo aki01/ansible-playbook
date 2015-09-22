@@ -3,5 +3,3 @@ packs:
   - git
   - tree
   - net-tools
-  - openssh-server 
-
