@@ -12,7 +12,7 @@
 #  command: easy_install pip
 #  when: ansible_os_family == 'RedHat'
 - name: install pip(rhep)
-  yum: name=python-pip state: present
+  yum: name=python-pip state=present
   when: ansible_os_family == 'RedHat'
 
 - name: apt-get update
