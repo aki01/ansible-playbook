@@ -26,3 +26,7 @@
 - name: Install Docker Python library
   pip: name=docker-py state=present
   sudo: yes
+
+- name: git clone 
+  git: repo=https://github.com/aki01/dockerfiles.git dest={{ repos_dir }} version={{ branch }} update=yes 
+

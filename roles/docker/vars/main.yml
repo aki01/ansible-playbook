@@ -1,1 +1,4 @@
 test: test
+work_dir: /root
+repos_dir: "{{ work_dir }}/dockerfiles"
+branch: master

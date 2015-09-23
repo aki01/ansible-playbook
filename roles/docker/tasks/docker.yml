@@ -1,6 +1,13 @@
 - name: Build docker images from dockerfiles
   docker_image:
     name: centos
-    path: /root/ansible/dockerfile
+    path: /root/dockerfiles
 #    state: build
 #    tag: "cent"
+
+- name: Run container
+  docker:
+    image: ubuntu 
+    name: centos
+#    state: present
+    state: started
