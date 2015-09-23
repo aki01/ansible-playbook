@@ -1,13 +1,13 @@
 - name: Build docker images from dockerfiles
   docker_image:
-    name: centos
-    path: /root/dockerfiles
+    name: ubuntu 
+    path: /root/dockerfiles/ubuntu
 #    state: build
 #    tag: "cent"
 
 - name: Run container
   docker:
     image: ubuntu 
-    name: centos
+    name: ubutnu 
 #    state: present
     state: started
