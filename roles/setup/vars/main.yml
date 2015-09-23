@@ -1,0 +1,8 @@
+packs:
+  - git
+  - tree
+  - net-tools
+  - wget
+  - curl
+  - vim
+  - htop

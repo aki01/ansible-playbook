@@ -1,0 +1,6 @@
+---
+- name: setup docker
+  hosts: all
+  sudo: yes
+  roles:
+     - setup

@@ -1,0 +1,19 @@
+- name: add epel repo
+  yum: name={{item}} state=installed
+  with_items:
+    - epel-release.noarch
+  when: ansible_os_family == 'RedHat'
+- name: yum update
+  yum: name=* state=latest
+  when: ansible_os_family == 'RedHat'
+- name: install packages
+  yum: name={{item}} state=installed
+  with_items:
+    - "{{ packs }}"
+  when: ansible_os_family == 'RedHat'
+
+- name: install packages
+  apt: name={{item}} state=installed
+  with_items:
+    - "{{ packs }}"
+  when: ansible_os_family == 'Debian'
