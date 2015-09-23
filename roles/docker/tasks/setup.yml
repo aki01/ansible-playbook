@@ -8,8 +8,11 @@
     - python-devel
     - docker
   when: ansible_os_family == 'RedHat'
+#- name: install pip(rhep)
+#  command: easy_install pip
+#  when: ansible_os_family == 'RedHat'
 - name: install pip(rhep)
-  command: easy_install pip
+  yum: name=python-pip state: present
   when: ansible_os_family == 'RedHat'
 
 - name: apt-get update
@@ -24,7 +27,10 @@
   when: ansible_os_family == 'Debian'
 
 - name: Install Docker Python library
-  pip: name=docker-py state=present
+  pip: name={{ item }} state=present
+  with_items:
+    - docker-py==1.2.3
+    - six>=1.4.0
   sudo: yes
 
 - name: git clone 
