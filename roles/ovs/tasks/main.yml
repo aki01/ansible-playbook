@@ -30,6 +30,8 @@
 #- name: copy ovs tarball
 #  copy: src={{ ovs_dir }}/*.tar.gz dest={{ work_dir }}/rpmbuild/SOURCES
 - name: copy ovs tarball
+  command: cp {{ ovs_dir }}/{{ ovs_ver }}.tar.gz {{ work_dir }}/rpmbuild/SOURCES 
+- name: tar ovs tarball
   command: tar -zxf {{ work_dir }}/rpmbuild/SOURCES/{{ ovs_ver }}.tar.gz
 - name: rpmbuild ovs
   command: rpmbuild -bb rhel/openvswitch.spec chdir={{ work_dir }}/rpmbuild/SOURCES/{{ ovs_ver }}
