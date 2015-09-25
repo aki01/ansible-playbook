@@ -9,5 +9,5 @@
   docker:
     image: ubuntu 
     name: ubutnu 
-#    state: present
-    state: started
+    state: present
+#    state: started

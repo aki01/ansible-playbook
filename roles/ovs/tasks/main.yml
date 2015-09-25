@@ -1,0 +1,35 @@
+- name: yum update
+  yum: name=* state=latest
+  when: ansible_os_family == 'RedHat'
+- name: install ovs dependent package(rhep)
+  yum: name={{item}} state=installed
+  with_items:
+    - gcc
+    - make
+    - python-devel
+    - openssl-devel
+    - kernel-devel
+    - graphviz
+    - kernel-debug-devel
+    - autoconf
+    - automake
+    - rpm-build
+    - redhat-rpm-config
+    - libtool
+  when: ansible_os_family == 'RedHat'
+- name: git clone 
+  git: repo=https://github.com/openvswitch/ovs.git dest={{ ovs_dir }} version=master update=yes 
+- name: run boot.sh
+  command: ./boot.sh chdir={{ ovs_dir }}
+- name: run configure
+  command: ./configure chdir={{ ovs_dir }}
+- name: make dist
+  command: make dist chdir={{ ovs_dir }}
+- name: create dir rpmbuild
+  file: path={{ work_dir }}/rpmbuild/SOURCES state=directory owner=root group=root mode=0755
+#- name: copy ovs tarball
+#  copy: src={{ ovs_dir }}/*.tar.gz dest={{ work_dir }}/rpmbuild/SOURCES
+- name: copy ovs tarball
+  command: tar -zxf {{ work_dir }}/rpmbuild/SOURCES/{{ ovs_ver }}.tar.gz
+- name: rpmbuild ovs
+  command: rpmbuild -bb rhel/openvswitch.spec chdir={{ work_dir }}/rpmbuild/SOURCES/{{ ovs_ver }}
