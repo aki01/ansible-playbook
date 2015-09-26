@@ -19,6 +19,13 @@
   when: ansible_os_family == 'RedHat'
 - name: git clone 
   git: repo=https://github.com/openvswitch/ovs.git dest={{ ovs_dir }} version=master update=yes 
+  
+- name: get ovs-version
+  shell: cat {{ ovs_dir }}/configure.ac | grep AC_INIT | cut -d , -f2| sed -e 's/^  *//g'| sed -e 's/  *$//g' > /tmp/ovsver
+- command: sed -i -e "s/^/openvswitch-/g" /tmp/ovsver
+- command: cat /tmp/ovsver
+  register: version_ovs
+  
 - name: run boot.sh
   command: ./boot.sh chdir={{ ovs_dir }}
 - name: run configure
@@ -37,8 +44,8 @@
 #- name: copy ovs tarball
 #  copy: src={{ ovs_dir }}/*.tar.gz dest={{ work_dir }}/rpmbuild/SOURCES
 - name: copy ovs tarball
-  command: cp {{ ovs_dir }}/{{ ovs_ver }}.tar.gz {{ work_dir }}/rpmbuild/SOURCES 
+  command: cp {{ ovs_dir }}/{{ version_ovs.stdout }}.tar.gz {{ work_dir }}/rpmbuild/SOURCES 
 - name: tar ovs tarball
-  command: tar -zxf {{ work_dir }}/rpmbuild/SOURCES/{{ ovs_ver }}.tar.gz
+  command: tar -zxf {{ work_dir }}/rpmbuild/SOURCES/{{ version_ovs.stdout }}.tar.gz
 - name: rpmbuild ovs
-  command: rpmbuild -bb rhel/openvswitch.spec chdir={{ work_dir }}/rpmbuild/SOURCES/{{ ovs_ver }}
+  command: rpmbuild -bb rhel/openvswitch.spec chdir={{ work_dir }}/rpmbuild/SOURCES/{{ version_ovs.stdout }}
