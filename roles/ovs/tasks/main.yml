@@ -26,7 +26,14 @@
 - name: make dist
   command: make dist chdir={{ ovs_dir }}
 - name: create dir rpmbuild
-  file: path={{ work_dir }}/rpmbuild/SOURCES state=directory owner=root group=root mode=0755
+  file: path={{ work_dir }}/rpmbuild/{{ item }} state=directory owner=root group=root mode=0755
+  with_items:
+    - BUILD
+    - BUILDROOT
+    - RPMS
+    - SOURCES
+    - SPECS
+    - SRPMS
 #- name: copy ovs tarball
 #  copy: src={{ ovs_dir }}/*.tar.gz dest={{ work_dir }}/rpmbuild/SOURCES
 - name: copy ovs tarball

@@ -1,6 +1,6 @@
 ---
 - name: set .bashrc
-  hosts: all 
+  hosts: test 
   sudo: yes
   roles:
      - bashrc
