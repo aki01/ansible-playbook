@@ -1,3 +1,4 @@
 work_dir: /root
 ovs_dir: "{{ work_dir }}/ovs"
 ovs_ver: openvswitch-2.4.90
+branch: master 

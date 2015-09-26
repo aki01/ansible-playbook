@@ -18,7 +18,7 @@
     - libtool
   when: ansible_os_family == 'RedHat'
 - name: git clone 
-  git: repo=https://github.com/openvswitch/ovs.git dest={{ ovs_dir }} version=master update=yes 
+  git: repo=https://github.com/openvswitch/ovs.git dest={{ ovs_dir }} version={{ branch }} update=yes 
   
 - name: get ovs-version
   shell: cat {{ ovs_dir }}/configure.ac | grep AC_INIT | cut -d , -f2| sed -e 's/^  *//g'| sed -e 's/  *$//g' > /tmp/ovsver
@@ -46,6 +46,15 @@
 - name: copy ovs tarball
   command: cp {{ ovs_dir }}/{{ version_ovs.stdout }}.tar.gz {{ work_dir }}/rpmbuild/SOURCES 
 - name: tar ovs tarball
-  command: tar -zxf {{ work_dir }}/rpmbuild/SOURCES/{{ version_ovs.stdout }}.tar.gz
+  command: tar -zxf {{ work_dir }}/rpmbuild/SOURCES/{{ version_ovs.stdout }}.tar.gz -C {{ work_dir }}/rpmbuild/SOURCES/
 - name: rpmbuild ovs
   command: rpmbuild -bb rhel/openvswitch.spec chdir={{ work_dir }}/rpmbuild/SOURCES/{{ version_ovs.stdout }}
+
+- name: install ovs rpm
+  yum: name={{ work_dir }}/rpmbuild/RPMS/x86_64/{{ version_ovs.stdout }}-1.x86_64.rpm
+
+- name: ovs servise enable
+  service: name=openvswitch state=started
+
+- name: ovs servise start 
+  service: name=openvswitch enabled=yes
