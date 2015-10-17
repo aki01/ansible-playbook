@@ -6,3 +6,4 @@ packs:
   - curl
   - vim
   - htop
+  - bash-completion
