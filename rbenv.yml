@@ -1,0 +1,6 @@
+---
+- name: setup ruby
+  hosts: all
+  sudo: yes
+  roles:
+     - rbenv

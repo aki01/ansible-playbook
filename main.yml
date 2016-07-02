@@ -1,3 +1,4 @@
 ---
-- include: set-bashrc.yml
+#- include: set-bashrc.yml
 #- include: docker.yml
+- include: docker.yml
