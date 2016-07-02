@@ -1,4 +1,4 @@
-# ansible-playbook1
+# ansible-playbook
 ansible playbooks for me
 
 ssh-copy-id -i /root/.ssh/id_rsa.pub root@host  
